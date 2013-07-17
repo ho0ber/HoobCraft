@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	
@@ -27,7 +28,10 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	
 	public void rightClickEvent(Player source, ItemStack item)
 	{
-		if (item.getTypeId() == 76 || item.getTypeId() == 75)
+		ItemMeta im = source.getItemInHand().getItemMeta();
+		if (im.hasLore() && 
+			im.getDisplayName().equals("Acolyte's Wand") &&
+			(item.getTypeId() == 280))
 		{
 			performAction(source, "fireball");
 		}
