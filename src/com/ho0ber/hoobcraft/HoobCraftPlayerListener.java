@@ -1,10 +1,12 @@
 package com.ho0ber.hoobcraft;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class HoobCraftPlayerListener extends HoobCraft implements Listener {
@@ -49,5 +51,21 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 			expMan.changeExp(0-cost);
 			new HoobCraftEvent(player, eventType);
 		}
+	}
+	
+	public void giveBook(Player player, String bookName)
+	{
+		ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+		BookMeta meta = (BookMeta) book.getItemMeta();
+		meta.setTitle("Acolyte's Tome of Basic Spellcraft");
+		meta.setAuthor("Arcanus, Lord of Magic");
+		meta.setPage(1, "The arcanist is careful; the arcanist is wise.");
+		meta.setPage(2, "Chapter One: Tools of the Acolyte\n \n" +
+						"The Acolyte's first tool is that of the basic wooden wand. " +
+						"To craft such a wand, the Acolyte must find the finest of iron" +
+						"and smelt it into an ingot. This ingot may be placed at the top" +
+						"of a rod of wood. The Acolyte will be able to fuse these materials" +
+						"into a simple magic wand.");
+		book.setItemMeta(meta);
 	}
 }

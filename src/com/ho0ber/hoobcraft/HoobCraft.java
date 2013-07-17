@@ -28,7 +28,12 @@ public class HoobCraft extends JavaPlugin {
 	{	
 		// Register the PlayerListener.
 		getServer().getPluginManager().registerEvents(new HoobCraftPlayerListener(), this);
-				
+		
+		// Register the command executor.
+		HoobCraftCommands commandExecutor = new HoobCraftCommands();
+		getCommand("hoobcraft").setExecutor(commandExecutor);
+		getCommand("hc").setExecutor(commandExecutor);
+
 		// Populate sword type list.
 		HoobCraft.swordTypes = new String[] {"fireball",
 											  "lightning",
