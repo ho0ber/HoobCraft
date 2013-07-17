@@ -1,12 +1,7 @@
-// HoobCraft by spy_1134
-// http://dev.bukkit.org/server-mods/HoobCraft
-// Fully tested with MC 1.2.5
-// Partially tested with MC 1.3.1
-
-// Feel free to re-use my code so long as the following conditions are met:
-// 1.) You share the resulting work so other people may benefit from your work as well.
-// 2.) You let users know that I was the original author.
-// 3.) You don't charge any money for your work.
+// HoobCraft by Samuel Colburn
+// http://ho0ber.com/hoobcraft
+// Based largely on AdminSword by spy_1134
+// http://dev.bukkit.org/bukkit-plugins/adminsword/
 
 package com.ho0ber.hoobcraft;
 
@@ -73,7 +68,7 @@ public class HoobCraft extends JavaPlugin {
 	
 	
 	
-/*	
+/*	 DISABlED FOR NOW
 	// Toggles the HoobCraft variable.
 	// Returns true on enable, false on disable.
 	public boolean toggleHoobCraft(Player player)
