@@ -4,13 +4,14 @@
 // http://dev.bukkit.org/bukkit-plugins/adminsword/
 
 package com.ho0ber.hoobcraft;
-
+/*
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+*/
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import org.bukkit.plugin.java.JavaPlugin;

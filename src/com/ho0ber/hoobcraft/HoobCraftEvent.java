@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -29,6 +30,9 @@ public class HoobCraftEvent {
 		{
 		// If eventtype is fireball...
 		case "fireball": createFireballEvent();
+						 break;
+		// If eventtype is fireball...
+		case "smallfireball": createSmallFireballEvent();
 						 break;
 		// If eventtype is teleport...
 		case "teleport": teleportPlayerEvent();
@@ -65,6 +69,24 @@ public class HoobCraftEvent {
 										   targetlocation.getZ() - startlocation.getZ());
 		// Spawns a fireball at startlocation and makes that fireball acessible via variable "fireball".
 		Fireball fireball = playerworld.spawn(startlocation, Fireball.class);
+		// Set the direction of the fireball to fireballvector.
+		fireball.setDirection(fireballvector);
+		// Sets the source of the fireball to the player.
+		fireball.setShooter(player);
+		return true;
+	}
+	
+	public boolean createSmallFireballEvent()
+	{
+		// Gets a location right in front of the player to prevent the fireball from hitting them.
+		Vector direction = player.getEyeLocation().getDirection().multiply(2);
+		Location startlocation = player.getEyeLocation().add(direction);
+		// Gets the coordinate difference between the target location and startlocation and dumps it into a vector.
+		Vector fireballvector = new Vector(targetlocation.getX() - startlocation.getX(),
+										   targetlocation.getY() - startlocation.getY(),
+										   targetlocation.getZ() - startlocation.getZ());
+		// Spawns a fireball at startlocation and makes that fireball acessible via variable "fireball".
+		SmallFireball fireball = playerworld.spawn(startlocation, SmallFireball.class);
 		// Set the direction of the fireball to fireballvector.
 		fireball.setDirection(fireballvector);
 		// Sets the source of the fireball to the player.

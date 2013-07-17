@@ -13,7 +13,7 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent event)
 	{
 
-		plugin.getLogger().info("HoobCraft: Got swing");
+		//plugin.getLogger().info("HoobCraft: Got swing");
 		// If the player left clicked...
 		if (event.getAction().toString().equals("LEFT_CLICK_AIR") || event.getAction().toString().equals("LEFT_CLICK_BLOCK"))
 		{
@@ -30,20 +30,20 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	
 	public void leftClickEvent(Player source, ItemStack item)
 	{
-		plugin.getLogger().info("HoobCraft: Got clickEvent");
+		//plugin.getLogger().info("HoobCraft: Got clickEvent");
 		ItemMeta im = source.getItemInHand().getItemMeta();
 		if (im.hasLore() && 
 			im.getDisplayName().equals("Acolyte's Wand") &&
 			(item.getTypeId() == 280))
 		{
-			performAction(source, "fireball", 1);
+			performAction(source, "smallfireball", 1);
 		}
 	}
 	
 	public void performAction(Player player, String eventType, int cost)
 	{
 		ExperienceManager expMan = new ExperienceManager(player);
-		plugin.getLogger().info("HoobCraft: Got performAction");
+		//plugin.getLogger().info("HoobCraft: Got performAction");
 		if (expMan.getCurrentExp() > cost)
 		{	
 			expMan.changeExp(0-cost);
