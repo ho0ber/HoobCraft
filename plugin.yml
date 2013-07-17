@@ -1,0 +1,6 @@
+name: HoobCraft
+version: 0.0.1
+description: Enables deep arcane magic
+load: POSTWORLD
+author: Ho0ber
+main: com.ho0ber.hoobcraft.HoobCraft
