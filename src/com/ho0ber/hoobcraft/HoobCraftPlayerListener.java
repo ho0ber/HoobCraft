@@ -33,12 +33,16 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 			im.getDisplayName().equals("Acolyte's Wand") &&
 			(item.getTypeId() == 280))
 		{
-			performAction(source, "fireball");
+			performAction(source, "fireball", 10);
 		}
 	}
 	
-	public void performAction(Player player, String eventType)
+	public void performAction(Player player, String eventType, int cost)
 	{
-		new HoobCraftEvent(player, eventType);
+		if (player.getLevel() > cost)
+		{
+			player.setLevel(player.getLevel() - cost);
+			new HoobCraftEvent(player, eventType);
+		}
 	}
 }
