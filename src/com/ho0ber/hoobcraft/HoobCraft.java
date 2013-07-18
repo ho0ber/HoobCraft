@@ -4,15 +4,18 @@
 // http://dev.bukkit.org/bukkit-plugins/adminsword/
 
 package com.ho0ber.hoobcraft;
+
+
 /*
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 */
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.entity.Player;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -206,7 +209,7 @@ public class HoobCraft extends JavaPlugin {
 			return true;
 		}
 	}
-	
+	*/
 	// Returns the first player whose name starts with the specified string.
 	public Player findPlayer(String playerName)
 	{
@@ -224,7 +227,7 @@ public class HoobCraft extends JavaPlugin {
 	    // If no players are online or no player was returned...
 	    return null;
 	}
-	
+	/*
 	public static int numberOfMatches(String playerName)
 	{
 		int matches = 0;

@@ -1,10 +1,14 @@
 package com.ho0ber.hoobcraft;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.BookMeta;
 
 public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
@@ -17,42 +21,17 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		}
 		
 		// If the kill argument was given...
-		else if (args[0].equals("kill") || args[0].equals("k"))
+		else if (args[0].equals("give") || args[0].equals("g"))
 		{
-			return false;
+			if (args.length == 3)
+			{
+				giveHoobItem(sender, args[1], args[2]);
+				return true;
+			}
+			else
+				return false;
 		}
 		
-		// If the toggle argument was given...
-		else if (args[0].equals("toggle") || args[0].equals("t"))
-		{
-			// Run the toggle function and return what it returns.
-			return false;
-		}
-		
-		// If the type argument was given...
-		else if (args[0].equals("type") || args[0].equals("ct"))
-		{
-			// Run the set event function then return true.
-			return false;
-		}
-		
-		// If the types argument was given...
-		else if (args[0].equals("types"))
-		{
-			return false;
-		}
-		
-		// If the check argument was given...
-		else if (args[0].equals("check") || args[0].equals("c"))
-		{
-			return false;
-		}
-		
-		// If the fly argument was given...
-		else if (args[0].equals("fly") || args[0].equals("f"))
-		{
-			return false;
-		}
 		
 		// If the help argument was given...
 		else if (args[0].equals("help") || args[0].equals("h"))
@@ -89,6 +68,41 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 			// Return true since we handled error messages.
 			return true;
 		}
+	}
+	
+	public void giveHoobItem(CommandSender sender, String playerName, String item)
+	{
+		Player target = null;
+		target = findPlayer(playerName);
+		
+		if (target != null)
+		{
+			switch(item)
+			{
+			case "1":
+				giveBookOne(target);
+			}
+			
+		}
+	
+	}
+	
+	public void giveBookOne(Player player)
+	{
+		ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+		BookMeta meta = (BookMeta) book.getItemMeta();
+		meta.setTitle("Acolyte's Tome of Basic Spellcraft");
+		meta.setAuthor("Arcanus, Lord of Magic");
+		meta.addPage("The arcanist is careful; the arcanist is wise.");
+		meta.addPage("1. The Acolyte's Wand\n \n" +
+					 "The Acolyte's first tool is that of the basic wooden wand. " +
+					 "To craft such a wand, the Acolyte must find the finest of iron" +
+					 "and smelt it into an ingot. This ingot may be placed at the top" +
+					 "of a rod of wood. The Acolyte will be able to fuse these materials" +
+					 "into a simple magic wand.");
+		book.setItemMeta(meta);
+		PlayerInventory playerInv = player.getInventory();
+		playerInv.addItem(book);
 	}
 	
 	public void printHelp(CommandSender sender, String page)

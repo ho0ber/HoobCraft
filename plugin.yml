@@ -1,6 +1,11 @@
 name: HoobCraft
-version: 0.0.10
+version: 0.0.12
 description: Enables deep arcane magic
 load: POSTWORLD
 author: Ho0ber
 main: com.ho0ber.hoobcraft.HoobCraft
+commands:
+   hoobcraft:
+      description: Runs a sub-command.
+      usage: /<command> [subcommand]
+      aliases: [hc]

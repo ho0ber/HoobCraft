@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class HoobCraftEvent {	
@@ -42,21 +43,40 @@ public class HoobCraftEvent {
 					break;
 		// If eventtype is lightning...
 		case "lightning": createLightningEvent();
-						  break;
+		  break;
+		  
+		case "pray": createPrayEvent();
+		  break;
+		  
+		case "heal": createHealingEvent();
+		  break;
 		// If none of these event types are matched, do nothing.
 		default: player.sendMessage(ChatColor.RED + "Invalid event type: " + eventtype);
 				 break;
 		}
 	}
 	
-	// Method to create lightning.
+	public boolean createPrayEvent()
+	{
+		ExperienceManager expMan = new ExperienceManager(player);
+		expMan.changeExp(5);
+		return true;
+	}
+
 	public boolean createLightningEvent()
 	{
 		// Call world method strikeLightning at targetLocation.
 		playerworld.strikeLightning(targetlocation);
 		return true;
 	}
-	
+
+	public boolean createHealingEvent()
+	{
+		// Call world method strikeLightning at targetLocation.
+		player.setHealth(player.getHealth()+1);
+		return true;
+	}
+
 	// Method to create fireballs.
 	public boolean createFireballEvent()
 	{

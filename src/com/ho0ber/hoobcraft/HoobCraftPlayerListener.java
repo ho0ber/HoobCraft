@@ -17,20 +17,23 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 
 		//plugin.getLogger().info("HoobCraft: Got swing");
 		// If the player left clicked...
+		String hand = null;
 		if (event.getAction().toString().equals("LEFT_CLICK_AIR") || event.getAction().toString().equals("LEFT_CLICK_BLOCK"))
+			hand = "LEFT";
+		else if (event.getAction().toString().equals("RIGHT_CLICK_AIR") || event.getAction().toString().equals("RIGHT_CLICK_BLOCK"))
+			hand = "RIGHT";
+		// Get the item they had in hand.
+		ItemStack item = event.getItem();
+		// If they were holding an item...
+		if(item != null && hand != null)
 		{
-			// Get the item they had in hand.
-			ItemStack item = event.getItem();
-			// If they were holding an item...
-			if(item != null)
-			{
-				// Hand off to rightClickEvent.
-				leftClickEvent(event.getPlayer(), event.getItem());
-			}
+			// Hand off to rightClickEvent.
+			ClickEvent(event.getPlayer(), event.getItem(), hand);
 		}
+
 	}
 	
-	public void leftClickEvent(Player source, ItemStack item)
+	public void ClickEvent(Player source, ItemStack item, String hand)
 	{
 		//plugin.getLogger().info("HoobCraft: Got clickEvent");
 		ItemMeta im = source.getItemInHand().getItemMeta();
@@ -38,7 +41,40 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 			im.getDisplayName().equals("Acolyte's Wand") &&
 			(item.getTypeId() == 280))
 		{
-			performAction(source, "smallfireball", 1);
+			if (hand == "LEFT")
+				performAction(source, "smallfireball", 1);
+		}
+		else if (im.hasLore() && 
+				im.getDisplayName().equals("Adept's Wand") &&
+				(item.getTypeId() == 50))
+		{
+			if (hand == "LEFT")
+				performAction(source, "fireball", 1);
+		}
+		else if (im.hasLore() && 
+				im.getDisplayName().equals("Master's Wand") &&
+				(item.getTypeId() == 76))
+		{
+			if (hand == "LEFT")
+				performAction(source, "lightning", 1);
+		}
+		else if (im.hasLore() && 
+				im.getDisplayName().equals("Arcane Lord's Sceptre") &&
+				(item.getTypeId() == 369))
+		{
+			if (hand == "LEFT")
+				performAction(source, "tnt", 0);
+			else
+				performAction(source, "teleport", 0);
+		}
+		else if (im.hasLore() && 
+				im.getDisplayName().equals("The Arcanium") &&
+				(item.getTypeId() == 340))
+		{
+			if (hand == "LEFT")
+				performAction(source, "pray", 0);
+			else
+				performAction(source, "heal", 0);
 		}
 	}
 	
@@ -53,19 +89,5 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		}
 	}
 	
-	public void giveBook(Player player, String bookName)
-	{
-		ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
-		BookMeta meta = (BookMeta) book.getItemMeta();
-		meta.setTitle("Acolyte's Tome of Basic Spellcraft");
-		meta.setAuthor("Arcanus, Lord of Magic");
-		meta.setPage(1, "The arcanist is careful; the arcanist is wise.");
-		meta.setPage(2, "Chapter One: Tools of the Acolyte\n \n" +
-						"The Acolyte's first tool is that of the basic wooden wand. " +
-						"To craft such a wand, the Acolyte must find the finest of iron" +
-						"and smelt it into an ingot. This ingot may be placed at the top" +
-						"of a rod of wood. The Acolyte will be able to fuse these materials" +
-						"into a simple magic wand.");
-		book.setItemMeta(meta);
-	}
+
 }
