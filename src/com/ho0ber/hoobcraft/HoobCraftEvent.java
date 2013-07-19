@@ -47,6 +47,9 @@ public class HoobCraftEvent {
 		case "pray": createPrayEvent(1,5);
 		  break;
 		  
+		case "praylots": createPrayEvent(10,0);
+		  break;
+		  
 		case "fly": createToogleFlyEvent();
 		  break;
 		  
@@ -60,7 +63,7 @@ public class HoobCraftEvent {
 	
 	public boolean createPrayEvent(int amount, int limit)
 	{
-		if(player.getLevel() < limit)
+		if(player.getLevel() < limit || limit == 0)
 		{
 			ExperienceManager expMan = new ExperienceManager(player);
 			expMan.changeExp(amount);

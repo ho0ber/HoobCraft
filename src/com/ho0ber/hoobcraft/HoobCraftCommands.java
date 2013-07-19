@@ -65,8 +65,8 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		ItemMeta im = item.getItemMeta();
 		im.setDisplayName("Acolyte's Shelf of Arcane Knowledge");
 		List<String> l = new ArrayList<String>();
-        l.add(ChatColor.RED + " A Gift");
-        l.add(ChatColor.GREEN + " Use this wisely my dear fellow.");
+        l.add(ChatColor.RED + " The source of the knowledge of an acolyte");
+        l.add(ChatColor.GREEN + " Use this wisely");
 		im.setLore(l);
 		item.setItemMeta(im);
 		PlayerInventory playerInv = player.getInventory();
