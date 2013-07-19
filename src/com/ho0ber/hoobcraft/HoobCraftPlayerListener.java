@@ -1,5 +1,6 @@
 package com.ho0ber.hoobcraft;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import java.util.Random;
 
 public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	
@@ -14,14 +16,23 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 	public void onPlayerMove(PlayerMoveEvent event)
 	{
 		Player player = event.getPlayer();
-		if(event.getTo().getBlock().getTypeId() == 0 &&	player.getAllowFlight())
+		if(player.getGameMode() == GameMode.CREATIVE && !player.getAllowFlight())
 		{
-			ExperienceManager expMan = new ExperienceManager(player);
-			//plugin.getLogger().info("HoobCraft: Got performAction");
-			if (expMan.getCurrentExp() > 1)
-				expMan.changeExp(-1);
-			else
-				player.setAllowFlight(false);
+			player.setAllowFlight(true);
+		}
+		else if(event.getTo().getBlock().getTypeId() == 0 && player.getAllowFlight())
+		{
+			Random randomGenerator = new Random();
+			int randomInt = randomGenerator.nextInt(100);
+			if(randomInt < 10)
+			{
+				ExperienceManager expMan = new ExperienceManager(player);
+				//plugin.getLogger().info("HoobCraft: Got performAction");
+				if (expMan.getCurrentExp() > 1)
+					expMan.changeExp(-1);
+				else
+					player.setAllowFlight(false);
+			}
 		}
 	}
 	
