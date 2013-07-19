@@ -6,7 +6,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class HoobCraftEvent {	
@@ -45,7 +44,10 @@ public class HoobCraftEvent {
 		case "lightning": createLightningEvent();
 		  break;
 		  
-		case "pray": createPrayEvent();
+		case "pray": createPrayEvent(1,5);
+		  break;
+		  
+		case "fly": createToogleFlyEvent();
 		  break;
 		  
 		case "heal": createHealingEvent();
@@ -56,11 +58,33 @@ public class HoobCraftEvent {
 		}
 	}
 	
-	public boolean createPrayEvent()
+	public boolean createPrayEvent(int amount, int limit)
 	{
-		ExperienceManager expMan = new ExperienceManager(player);
-		expMan.changeExp(5);
-		return true;
+		if(player.getLevel() < limit)
+		{
+			ExperienceManager expMan = new ExperienceManager(player);
+			expMan.changeExp(amount);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean createToogleFlyEvent()
+	{
+		// Check if the player is already allowed to fly.
+		if (player.getAllowFlight())
+		{
+			// If they are allowed to fly, disallow it.
+			player.setAllowFlight(false);
+			return false;
+		}
+		// If player does not have flying enabled...
+		else
+		{
+			// Allow flight.
+			player.setAllowFlight(true);
+			return true;
+		}
 	}
 
 	public boolean createLightningEvent()
@@ -73,7 +97,8 @@ public class HoobCraftEvent {
 	public boolean createHealingEvent()
 	{
 		// Call world method strikeLightning at targetLocation.
-		player.setHealth(player.getHealth()+1);
+		if(player.getHealth() < 20)
+			player.setHealth(player.getHealth()+1);
 		return true;
 	}
 

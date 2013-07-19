@@ -1,15 +1,29 @@
 package com.ho0ber.hoobcraft;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class HoobCraftPlayerListener extends HoobCraft implements Listener {
+	
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent event)
+	{
+		Player player = event.getPlayer();
+		if(event.getTo().getBlock().getTypeId() == 0 &&	player.getAllowFlight())
+		{
+			ExperienceManager expMan = new ExperienceManager(player);
+			//plugin.getLogger().info("HoobCraft: Got performAction");
+			if (expMan.getCurrentExp() > 1)
+				expMan.changeExp(-1);
+			else
+				player.setAllowFlight(false);
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event)
@@ -49,14 +63,14 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 				(item.getTypeId() == 50))
 		{
 			if (hand == "LEFT")
-				performAction(source, "fireball", 1);
+				performAction(source, "fireball", 3);
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("Master's Wand") &&
 				(item.getTypeId() == 76))
 		{
 			if (hand == "LEFT")
-				performAction(source, "lightning", 1);
+				performAction(source, "lightning", 5);
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("Arcane Lord's Sceptre") &&
@@ -65,7 +79,7 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 			if (hand == "LEFT")
 				performAction(source, "tnt", 0);
 			else
-				performAction(source, "teleport", 0);
+				performAction(source, "fly", 0);
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("The Arcanium") &&
@@ -75,6 +89,15 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 				performAction(source, "pray", 0);
 			else
 				performAction(source, "heal", 0);
+		}
+		else if (im.hasLore() && 
+				im.getDisplayName().equals("The Path of Arcanus") &&
+				(item.getTypeId() == 340))
+		{
+			if (hand == "LEFT")
+				performAction(source, "teleport", 5);
+			else
+				performAction(source, "fly", 0);
 		}
 	}
 	
