@@ -65,10 +65,14 @@ public class HoobCraftEvent {
 	{
 		if(player.getLevel() < limit || limit == 0)
 		{
+			player.sendMessage(ChatColor.RED + "Adding " + amount + " up to level" + limit);
 			ExperienceManager expMan = new ExperienceManager(player);
 			expMan.changeExp(amount);
 			return true;
 		}
+		else
+			player.sendMessage(ChatColor.RED + "NOT " + amount + " up to level" + limit + "; pl = " + player.getLevel());
+		
 		return false;
 	}
 	

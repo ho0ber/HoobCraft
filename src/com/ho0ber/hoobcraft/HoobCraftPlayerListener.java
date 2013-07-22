@@ -20,7 +20,9 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		{
 			player.setAllowFlight(true);
 		}
-		else if(event.getTo().getBlock().getTypeId() == 0 && player.getAllowFlight())
+		else if(player.getGameMode() == GameMode.SURVIVAL &&
+				event.getTo().getBlock().getTypeId() == 0 && 
+				player.getAllowFlight())
 		{
 			Random randomGenerator = new Random();
 			int randomInt = randomGenerator.nextInt(100);
@@ -103,7 +105,7 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("The Path of Arcanus") &&
-				(item.getTypeId() == 340))
+				(item.getTypeId() == 345))
 		{
 			if (hand == "LEFT")
 				performAction(source, "teleport", 5);
