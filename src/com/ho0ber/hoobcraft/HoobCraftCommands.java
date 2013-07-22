@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
@@ -53,10 +54,11 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 			case "Shelf1":
 				giveShelfOne(target);
 				break;
+			case "Shelf2":
+				giveShelfTwo(target);
+				break;
 			}
-			
 		}
-	
 	}
 	
 	public void giveShelfOne(Player player)
@@ -73,8 +75,24 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		playerInv.addItem(item);
 	}
 	
+	public void giveShelfTwo(Player player)
+	{
+		ItemStack item = new ItemStack(Material.JUKEBOX, 1);
+		item.setData(new MaterialData(Material.JUKEBOX, (byte) 7));
+		ItemMeta im = item.getItemMeta();
+		im.setDisplayName("Adept's Shelf of Arcane Knowledge");
+		List<String> l = new ArrayList<String>();
+        l.add(ChatColor.RED + " The source of the knowledge of an adept");
+        l.add(ChatColor.GREEN + " Use this wisely");
+		im.setLore(l);
+		item.setItemMeta(im);
+		PlayerInventory playerInv = player.getInventory();
+		playerInv.addItem(item);
+	}
+	
 	public void giveBookOne(Player player)
 	{
+		//Replacing this with SavedBooks - easier to implement/format
 		ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
 		BookMeta meta = (BookMeta) book.getItemMeta();
 		meta.setTitle("Acolyte's Tome of Basic Spellcraft");

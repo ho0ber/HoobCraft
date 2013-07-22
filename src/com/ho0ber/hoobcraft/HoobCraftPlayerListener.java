@@ -70,6 +70,8 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		{
 			if (hand == "LEFT")
 				performAction(source, "smallfireball", 1);
+			else
+				performAction(source, "smallfireballlaunch", 1);
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("Adept's Wand") &&
@@ -77,6 +79,8 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		{
 			if (hand == "LEFT")
 				performAction(source, "fireball", 3);
+			else
+				performAction(source, "praylittle", 0);
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("Master's Wand") &&
@@ -84,6 +88,11 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 		{
 			if (hand == "LEFT")
 				performAction(source, "lightning", 5);
+			else
+			{
+				performAction(source, "commandtest", 0);
+				performAction(source, "pcommandtest", 0);
+			}
 		}
 		else if (im.hasLore() && 
 				im.getDisplayName().equals("Arcane Lord's Sceptre") &&

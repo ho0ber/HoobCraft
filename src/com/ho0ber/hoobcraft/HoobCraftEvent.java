@@ -1,10 +1,15 @@
 package com.ho0ber.hoobcraft;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.SmallFireball;
+import org.bukkit.entity.LargeFireball;
+import org.bukkit.entity.WitherSkull;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -25,26 +30,31 @@ public class HoobCraftEvent {
 		playerworld = player.getWorld();
 		targetlocation = player.getTargetBlock(null, 500).getLocation();
 		
-		// Check which helper method should be run by the constructor.
 		switch (eventtype)
 		{
-		// If eventtype is fireball...
 		case "fireball": createFireballEvent();
 						 break;
-		// If eventtype is fireball...
 		case "smallfireball": createSmallFireballEvent();
-						 break;
-		// If eventtype is teleport...
+		 break;
+		case "smallfireballlaunch": createSmallFireballLaunchEvent();
+		 break;
+		case "largefireball": createLargeFireballEvent();
+		 break;
+		case "wither": createWitherEvent();
+		 break;
+		case "arrow": createArrowEvent();
+		 break;
 		case "teleport": teleportPlayerEvent();
 						 break;
-		// If eventtype is tnt...
 		case "tnt": createTNTEvent();
 					break;
-		// If eventtype is lightning...
 		case "lightning": createLightningEvent();
 		  break;
 		  
-		case "pray": createPrayEvent(1,5);
+		case "pray": createPrayEvent(2,5);
+		  break;
+		  
+		case "praylittle": createPrayEvent(1,2);
 		  break;
 		  
 		case "praylots": createPrayEvent(10,0);
@@ -53,8 +63,15 @@ public class HoobCraftEvent {
 		case "fly": createToogleFlyEvent();
 		  break;
 		  
+		case "commandtest": createCommandTestEvent();
+		  break;
+		  
+		case "pcommandtest": createPCommandTestEvent();
+		  break;
+		  
 		case "heal": createHealingEvent();
 		  break;
+		  
 		// If none of these event types are matched, do nothing.
 		default: player.sendMessage(ChatColor.RED + "Invalid event type: " + eventtype);
 				 break;
@@ -100,6 +117,22 @@ public class HoobCraftEvent {
 		playerworld.strikeLightning(targetlocation);
 		return true;
 	}
+	
+	public boolean createCommandTestEvent()
+	{
+		// Call world method strikeLightning at targetLocation.
+		String cmd = "give " + player.getName() + " 4 64"; 
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+		return true;
+	}
+
+	public boolean createPCommandTestEvent()
+	{
+		// Call world method strikeLightning at targetLocation.
+		String cmd = "/help"; 
+		player.chat(cmd);
+		return true;
+	}
 
 	public boolean createHealingEvent()
 	{
@@ -125,6 +158,7 @@ public class HoobCraftEvent {
 		fireball.setDirection(fireballvector);
 		// Sets the source of the fireball to the player.
 		fireball.setShooter(player);
+		player.getWorld().playSound(player.getLocation(),Sound.BLAZE_DEATH,1, 0);
 		return true;
 	}
 	
@@ -143,6 +177,56 @@ public class HoobCraftEvent {
 		fireball.setDirection(fireballvector);
 		// Sets the source of the fireball to the player.
 		fireball.setShooter(player);
+		return true;
+	}
+	
+	public boolean createLargeFireballEvent()
+	{
+		// Gets a location right in front of the player to prevent the fireball from hitting them.
+		Vector direction = player.getEyeLocation().getDirection().multiply(2);
+		Location startlocation = player.getEyeLocation().add(direction);
+		// Gets the coordinate difference between the target location and startlocation and dumps it into a vector.
+		Vector fireballvector = new Vector(targetlocation.getX() - startlocation.getX(),
+										   targetlocation.getY() - startlocation.getY(),
+										   targetlocation.getZ() - startlocation.getZ());
+		// Spawns a fireball at startlocation and makes that fireball acessible via variable "fireball".
+		LargeFireball fireball = playerworld.spawn(startlocation, LargeFireball.class);
+		// Set the direction of the fireball to fireballvector.
+		fireball.setDirection(fireballvector);
+		// Sets the source of the fireball to the player.
+		fireball.setShooter(player);
+		return true;
+	}
+	
+	public boolean createWitherEvent()
+	{
+		// Gets a location right in front of the player to prevent the fireball from hitting them.
+		Vector direction = player.getEyeLocation().getDirection().multiply(2);
+		Location startlocation = player.getEyeLocation().add(direction);
+		// Gets the coordinate difference between the target location and startlocation and dumps it into a vector.
+		Vector fireballvector = new Vector(targetlocation.getX() - startlocation.getX(),
+										   targetlocation.getY() - startlocation.getY(),
+										   targetlocation.getZ() - startlocation.getZ());
+		// Spawns a fireball at startlocation and makes that fireball acessible via variable "fireball".
+		WitherSkull fireball = playerworld.spawn(startlocation, WitherSkull.class);
+		// Set the direction of the fireball to fireballvector.
+		fireball.setDirection(fireballvector);
+		// Sets the source of the fireball to the player.
+		fireball.setShooter(player);
+		return true;
+	}
+	
+	public boolean createArrowEvent()
+	{
+		Arrow ar = player.launchProjectile(Arrow.class);
+		ar.setFireTicks(5);
+		ar.setBounce(true);
+		return true;
+	}
+	
+	public boolean createSmallFireballLaunchEvent()
+	{
+		player.launchProjectile(SmallFireball.class);
 		return true;
 	}
 	
