@@ -8,6 +8,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 import java.util.Random;
 
 public class HoobCraftPlayerListener extends HoobCraft implements Listener {
@@ -121,16 +123,34 @@ public class HoobCraftPlayerListener extends HoobCraft implements Listener {
 			else
 				performAction(source, "fly", 0);
 		}
+		else if (im.hasLore() && 
+				im.getDisplayName().substring(0,16).equals("Wand of Disguise") &&
+				(item.getTypeId() == 280))
+		{
+			if (hand == "LEFT")
+			{
+				List<String> l = im.getLore();
+				plugin.getLogger().info("lore1: "+l.get(0)+" lore2: "+l.get(1));
+				performAction(source, "disguise", 0, l.get(1));
+			}
+			else
+				performAction(source, "disguise", 0, "");
+		}
+
+	}
+	public void performAction(Player player, String eventType, int cost)
+	{
+		performAction(player, eventType, cost, null);
 	}
 	
-	public void performAction(Player player, String eventType, int cost)
+	public void performAction(Player player, String eventType, int cost, String args)
 	{
 		ExperienceManager expMan = new ExperienceManager(player);
 		//plugin.getLogger().info("HoobCraft: Got performAction");
 		if (expMan.getCurrentExp() > cost)
 		{	
 			expMan.changeExp(0-cost);
-			new HoobCraftEvent(player, eventType);
+			new HoobCraftEvent(player, eventType, args);
 		}
 	}
 	

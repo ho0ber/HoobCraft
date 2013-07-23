@@ -2,7 +2,6 @@ package com.ho0ber.hoobcraft;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -28,9 +27,9 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		// If the kill argument was given...
 		else if (args[0].equals("give") || args[0].equals("g"))
 		{
-			if (args.length == 3)
+			if (args.length >= 3)
 			{
-				giveHoobItem(sender, args[1], args[2]);
+				giveHoobItem(sender, args[1], args[2], args);
 				return true;
 			}
 			else
@@ -39,10 +38,11 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		return false;
 	}
 	
-	public void giveHoobItem(CommandSender sender, String playerName, String item)
+	public void giveHoobItem(CommandSender sender, String playerName, String item, String[] args)
 	{
 		Player target = null;
 		target = findPlayer(playerName);
+		String dis = "";
 		
 		if (target != null)
 		{
@@ -53,6 +53,14 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 				break;
 			case "Shelf1":
 				giveShelfOne(target);
+				break;
+			case "disguise":
+				if (args.length > 3)
+					dis = args[3];
+				if (args.length > 4)
+					for(int i = 4; i < args.length; i++)
+						dis = dis + " " + args[i];
+				giveDisguiseWand(target, dis);
 				break;
 			case "Shelf2":
 				giveShelfTwo(target);
@@ -69,6 +77,20 @@ public class HoobCraftCommands extends HoobCraft implements CommandExecutor {
 		List<String> l = new ArrayList<String>();
         l.add(ChatColor.RED + " The source of the knowledge of an acolyte");
         l.add(ChatColor.GREEN + " Use this wisely");
+		im.setLore(l);
+		item.setItemMeta(im);
+		PlayerInventory playerInv = player.getInventory();
+		playerInv.addItem(item);
+	}
+	
+	public void giveDisguiseWand(Player player, String disguise)
+	{
+		ItemStack item = new ItemStack(Material.STICK, 1);
+		ItemMeta im = item.getItemMeta();
+		im.setDisplayName("Wand of Disguise "+disguise);
+		List<String> l = new ArrayList<String>();
+        l.add(ChatColor.RED + " Disguises the wielder as");
+        l.add(disguise);
 		im.setLore(l);
 		item.setItemMeta(im);
 		PlayerInventory playerInv = player.getInventory();

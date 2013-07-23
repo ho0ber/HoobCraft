@@ -22,7 +22,7 @@ public class HoobCraftEvent {
 	
 	// HoobCraftEvent constructor.
 	// This is run when new HoobCraftEvent(...) is called.
-	public HoobCraftEvent(Player sourcePlayer, String eventtype)
+	public HoobCraftEvent(Player sourcePlayer, String eventtype, String args)
 	{
 		// Gather some data...
 		player = sourcePlayer;
@@ -68,6 +68,9 @@ public class HoobCraftEvent {
 		  
 		case "pcommandtest": createPCommandTestEvent();
 		  break;
+		  
+		case "disguise": createDisguiseEvent(args);
+			break;
 		  
 		case "heal": createHealingEvent();
 		  break;
@@ -122,6 +125,19 @@ public class HoobCraftEvent {
 	{
 		// Call world method strikeLightning at targetLocation.
 		String cmd = "give " + player.getName() + " 4 64"; 
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+		return true;
+	}
+
+	public boolean createDisguiseEvent(String disguise)
+	{
+		// Call world method strikeLightning at targetLocation.
+		String cmd;
+		if (disguise != "")
+			cmd = "dis " + player.getName() + " " + disguise;
+		else
+			cmd = "undis " + player.getName();
+		
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
 		return true;
 	}
